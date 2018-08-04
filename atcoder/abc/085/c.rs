@@ -1,6 +1,5 @@
 use std::io::*;
 use std::str::FromStr;
-use std::vec::Vec;
 
 fn read<T: FromStr>() -> T {
     let stdin = stdin();
@@ -15,14 +14,20 @@ fn read<T: FromStr>() -> T {
 }
 
 fn main() {
-    let n:u32 = read();    
-    let mut a:Vec<u32> = (0..n).map(|_| read()).collect();
-    a.sort();
-    a.reverse();
-    let mut alice:u32 = 0;
-    let mut bob:u32 = 0;
-    for (i, &v) in a.iter().enumerate() {
-        if i%2 == 0 { alice += v } else { bob += v };
+    let n:i32 = read();
+    let y:i32 = read();
+    let mut ans:Option<(i32, i32, i32)> = None;
+
+    'outer: 
+    for i in 0..n+1 {
+        for j in 0..n-i+1 {
+            if i*10000 + j*5000 + (n-i-j)*1000 == y {
+                ans = Some((i, j, n-i-j));
+                break 'outer;
+            }
+        }
     }
-    println!("{}", alice - bob);
+
+    let (x, y, z) = ans.unwrap_or((-1, -1, -1));
+    println!("{} {} {}", x, y, z);
 }
