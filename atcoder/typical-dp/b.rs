@@ -65,3 +65,30 @@ impl<A: Read, B: Read, C: Read, D: Read> Read for (A, B, C, D) {
 }
 macro_rules! max{($x:expr)=>{$x};($x:expr,$($xs:tt)+)=>{max($x,max!($($xs)+))};}
 macro_rules! min{($x:expr)=>{$x};($x:expr,$($xs:tt)+)=>{min($x,min!($($xs)+))};}
+
+fn main() {
+    let (a, b):(usize, usize) = readln();
+    let va:Vec<u32> = readln();
+    let vb:Vec<u32> = readln();
+
+    let mut dp = vec!(vec!(0; b+1); a+1);   // dp[i][j] = aが下からi個，bが下からj個のときのすぬけの合計
+
+    for i in 1..a+1 {
+        if (a+b-i)%2 == 0 { dp[i][0] = dp[i-1][0] + va[a-i]; }
+        else { dp[i][0] = dp[i-1][0]; }
+    }
+    for j in 1..b+1 {
+        if (a+b-j)%2 == 0 { dp[0][j] = dp[0][j-1] + vb[b-j]; }
+        else { dp[0][j] = dp[0][j-1]; }
+    }
+
+    for i in 1..a+1 {
+        for j in 1..b+1 {
+            if (a+b-i-j)%2 == 0 { dp[i][j] = max(dp[i-1][j] + va[a-i], dp[i][j-1] + vb[b-j]); }
+            else { dp[i][j] = min(dp[i-1][j], dp[i][j-1]); }
+        }
+    }
+
+    println!("{}", dp[a][b]);
+
+}
