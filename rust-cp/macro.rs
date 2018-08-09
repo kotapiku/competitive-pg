@@ -12,7 +12,6 @@ macro_rules! dump{
     }
 }
  
-const INF: i64 = 0x3f3f3f3f3f3f3f3f;
 const MOD: i64 = 1000000007;
 
 fn main() {
