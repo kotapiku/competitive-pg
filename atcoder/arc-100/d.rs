@@ -26,12 +26,12 @@ fn main() {
     let n:usize = readln();
     let mut va:Vec<i64> = readln();
     for i in 1..n { va[i] += va[i-1]; }
-    let mut f1:Vec<usize> = vec![0;n-1];
-    let mut f2:Vec<usize> = vec![0;n-1];
+    let mut f1:Vec<usize> = vec![0;n-2];
+    let mut f2:Vec<usize> = vec![0;n-2];
 
     let mut l = 0;
     let mut r = 2;
-    for i in 1..n-1 {
+    for i in 1..n-2 {
         while (va[i]-2*va[l+1]).abs() < (va[i]-2*va[l]) { l += 1; }
         while (va[i]+va[n-1]-2*va[r+1]).abs() < (va[i]+va[n-1]-2*va[r]).abs() { r += 1; }
         f1[i] = l;
