@@ -4,14 +4,12 @@ fn main() {
     let (n, m): (i64, i64) = readln();
 
     let mut ans: i64 = 1;
-    for i in 1..(m as f64).sqrt() as i64 + 1 {
-        if m % i != 0 { continue; } else {
-            if (m/i) * n <= m {
-                ans = std::cmp::max(ans, m/i);
-            }
-            if i*n <= m {
-                ans = std::cmp::max(ans, i);
-            }
+    for i in (1..(m as f64).sqrt() as i64 + 1).filter(|&i| m % i == 0) {
+        if (m/i) * n <= m {
+            ans = std::cmp::max(ans, m/i);
+        }
+        if i*n <= m {
+            ans = std::cmp::max(ans, i);
         }
     }
     println!("{}", ans);
